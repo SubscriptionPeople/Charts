@@ -53,18 +53,13 @@ class Dataset extends DatasetClass
     protected function formatValues(array $labels)
     {
         if (in_array(strtolower($this->type), $this->specialDatasets)) {
-            $colors = $this->getColors($labels);
 
             return Collection::make($this->values)
-                ->map(function ($value, $key) use ($colors, $labels) {
+                ->map(function ($value, $key) use ($labels) {
                     $val = [
                         'name' => $labels[$key],
                         'y'    => $value,
                     ];
-
-                    if ($colors->count() > 0) {
-                        $val['color'] = $colors->get($key);
-                    }
 
                     return $val;
                 })->toArray();
